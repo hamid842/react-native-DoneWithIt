@@ -9,15 +9,15 @@ const ListingDetailsScreen = (props) => {
         <View>
             <Image source={require('../assets/jacket.jpg')} style={styles.image}/>
             <View style={styles.detailsContainer}>
-            <AppText style={styles.title}>Red jacket for sale</AppText>
-            <AppText style={styles.price}>$100</AppText>
-            <View style={styles.userContainer}>
-            <ListItem 
-            image={require('../assets/mosh.jpg')} 
-            title="Hamid Mohamadi" 
-            subTitle='5 Listings'
-            />
-            </View>
+                <AppText style={styles.title}>Red jacket for sale</AppText>
+                <AppText style={styles.price}>$100</AppText>
+                <View style={styles.userContainer}>
+                    <ListItem 
+                    image={require('../assets/mosh.jpg')} 
+                    title="Hamid Mohamadi" 
+                    subTitle='5 Listings'
+                    />
+                </View>
             </View>
          </View>
     );
