@@ -1,55 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image } from "react-native";
-import Screen from "../components/Screen";
-import AppTextInput from "../components/AppTextInput";
-import AppButton from "../components/AppButton";
-import Formik from "formik";
 import * as Yup from "yup";
-import AppText from "../components/AppText";
+
+import Screen from "../components/Screen";
+import {
+  ErrorMessage,
+  Form,
+  FormField,
+  SubmitButton,
+} from "../components/forms";
+import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
-const LoginScreen = (props) => {
+
+function LoginScreen() {
+  const [loginFailed, setLoginFailed] = useState(false);
+  const { logIn } = useAuth();
+
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.login(email, password);
+    if (!result.ok) {
+      return setLoginFailed(true);
+      console.log(result);
+    }
+    setLoginFailed(false);
+    logIn(result.data);
+  };
   return (
     <Screen style={styles.container}>
-      <Image source={require("../assets/logo-red.png")} style={styles.logo} />
-      <Formik
+      <Image style={styles.logo} source={require("../assets/logo-red.png")} />
+
+      <Form
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ handleChange, handleSubmit, errors }) => (
-          <>
-            <AppTextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="email"
-              placeholder="Email"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              onChangeText={handleChange("email")}
-            />
-            <AppText style={{ color: "red" }}>{errors.email}</AppText>
-            <AppTextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="lock"
-              placeholder="Password"
-              textContentType="password"
-              secureTextEntry={true}
-              onChangeText={handleChange("password")}
-            />
-            <AppText style={{ color: "red" }}>{errors.password}</AppText>
-
-            <AppButton title="Login" onPress={handleSubmit} />
-          </>
-        )}
-      </Formik>
+        <ErrorMessage error="Invalid email or password" visible={loginFailed} />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="email"
+          keyboardType="email-address"
+          name="email"
+          placeholder="Email"
+          textContentType="emailAddress"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="password"
+          placeholder="Password"
+          secureTextEntry
+          textContentType="password"
+        />
+        <SubmitButton title="Login" />
+      </Form>
     </Screen>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
