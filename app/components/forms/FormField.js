@@ -7,7 +7,6 @@ import ErrorMessage from "./ErrorMessage";
 function AppFormField({ name, width, ...otherProps }) {
   const {
     setFieldTouched,
-    handleChange,
     setFieldValue,
     errors,
     touched,
