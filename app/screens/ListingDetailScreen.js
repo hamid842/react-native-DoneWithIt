@@ -1,7 +1,7 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
+  ScrollView,
   View,
   KeyboardAvoidingView,
   Platform,
@@ -16,29 +16,31 @@ import colors from "../config/colors";
 const ListingDetailScreen = ({ route }) => {
   const listing = route.params;
   return (
-    <KeyboardAvoidingView
-      behavior="position"
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
-    >
-      <Image
-        style={styles.image}
-        uri={listing.images[0].url}
-        preview={{ uri: listing.images[0].thumbnailUrl }}
-        tint="light"
-      />
-      <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>{listing.title}</AppText>
-        <AppText style={styles.price}>{listing.price}</AppText>
-        <View style={styles.userContainer}>
-          <ListItem
-            title="Mosh"
-            subTitle="5 Listings"
-            image={require("../assets/mosh.jpg")}
-          />
+    <ScrollView>
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
+      >
+        <Image
+          style={styles.image}
+          uri={listing.images[0].url}
+          preview={{ uri: listing.images[0].thumbnailUrl }}
+          tint="light"
+        />
+        <View style={styles.detailsContainer}>
+          <AppText style={styles.title}>{listing.title}</AppText>
+          <AppText style={styles.price}>{listing.price}</AppText>
+          <View style={styles.userContainer}>
+            <ListItem
+              title="Mosh"
+              subTitle="5 Listings"
+              image={require("../assets/mosh.jpg")}
+            />
+          </View>
+          <ContactSellerForm listing={listing} />
         </View>
-        <ContactSellerForm listing={listing} />
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

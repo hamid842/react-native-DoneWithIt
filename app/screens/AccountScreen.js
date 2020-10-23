@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import React from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 
 import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
+import routes from "../navigation/routes";
 import Screen from "../components/Screen";
-import AuthContext from "../auth/context";
-import authStorage from "../auth/storage";
 import useAuth from "../auth/useAuth";
 
 const menuItems = [
@@ -16,7 +15,6 @@ const menuItems = [
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
     },
-    targetScreen: "Listings",
   },
   {
     title: "My Messages",
@@ -24,12 +22,13 @@ const menuItems = [
       name: "email",
       backgroundColor: colors.secondary,
     },
-    targetScreen: "Messages",
+    targetScreen: routes.MESSAGES,
   },
 ];
 
 function AccountScreen({ navigation }) {
-  const { user, logOut } = useAuth(AuthContext);
+  const { user, logOut } = useAuth();
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
@@ -39,7 +38,6 @@ function AccountScreen({ navigation }) {
           image={require("../assets/mosh.jpg")}
         />
       </View>
-
       <View style={styles.container}>
         <FlatList
           data={menuItems}
@@ -62,7 +60,7 @@ function AccountScreen({ navigation }) {
       <ListItem
         title="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-        onPress={logOut}
+        onPress={() => logOut()}
       />
     </Screen>
   );

@@ -9,7 +9,6 @@ const apiClient = create({
 
 apiClient.addAsyncRequestTransform(async (request) => {
   const authToken = await authStorage.getToken();
-
   if (!authToken) return;
   request.headers["x-auth-token"] = authToken;
 });
@@ -26,4 +25,5 @@ apiClient.get = async (url, params, axiosConfig) => {
   const data = await cache.get(url);
   return data ? { ok: true, data } : response;
 };
+
 export default apiClient;

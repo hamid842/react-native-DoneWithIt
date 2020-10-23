@@ -17,18 +17,17 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
-function LoginScreen() {
+function LoginScreen(props) {
+  const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
-  const { logIn } = useAuth();
 
   const handleSubmit = async ({ email, password }) => {
     const result = await authApi.login(email, password);
-    if (!result.ok) {
-      return setLoginFailed(true);
-    }
+    if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
-    logIn(result.data);
+    auth.logIn(result.data);
   };
+
   return (
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require("../assets/logo-red.png")} />
@@ -38,7 +37,10 @@ function LoginScreen() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <ErrorMessage error="Invalid email or password" visible={loginFailed} />
+        <ErrorMessage
+          error="Invalid email and/or password."
+          visible={loginFailed}
+        />
         <FormField
           autoCapitalize="none"
           autoCorrect={false}

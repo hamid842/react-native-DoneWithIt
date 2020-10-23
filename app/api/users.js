@@ -1,5 +1,5 @@
-import clent from "./client";
+import client from "./client";
 
-const register = (userInfo) => clent.post("/users", userInfo);
+const register = (userInfo) => client.post("/users", userInfo);
 
 export default { register };

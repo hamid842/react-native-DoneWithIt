@@ -11,8 +11,8 @@ import {
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import FormImagePicker from "../components/forms/FormImagePicker";
-import useLocation from "../hooks/useLocation";
 import listingsApi from "../api/listings";
+import useLocation from "../hooks/useLocation";
 import UploadScreen from "./UploadScreen";
 
 const validationSchema = Yup.object().shape({
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
   price: Yup.number().required().min(1).max(10000).label("Price"),
   description: Yup.string().label("Description"),
   category: Yup.object().required().nullable().label("Category"),
-  images: Yup.array().min(1, "Please select at least one image"),
+  images: Yup.array().min(1, "Please select at least one image."),
 });
 
 const categories = [
@@ -95,8 +95,9 @@ function ListingEditScreen() {
 
     if (!result.ok) {
       setUploadVisible(false);
-      return alert("Could not save the listing.");
+      return alert("Could not save the listing");
     }
+
     resetForm();
   };
 

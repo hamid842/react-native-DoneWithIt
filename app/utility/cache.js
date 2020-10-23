@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import { AsyncStorage } from "react-native";
 import dayjs from "dayjs";
 
 const prefix = "cache";
@@ -10,8 +10,7 @@ const store = async (key, value) => {
       value,
       timestamp: Date.now(),
     };
-
-    await AsyncStorage.setItem("cache" + key, JSON.stringify(item));
+    await AsyncStorage.setItem(prefix + key, JSON.stringify(item));
   } catch (error) {
     console.log(error);
   }
@@ -27,10 +26,11 @@ const get = async (key) => {
   try {
     const value = await AsyncStorage.getItem(prefix + key);
     const item = JSON.parse(value);
+
     if (!item) return null;
 
     if (isExpired(item)) {
-      // read about CQS
+      // Command Query Separation (CQS)
       await AsyncStorage.removeItem(prefix + key);
       return null;
     }

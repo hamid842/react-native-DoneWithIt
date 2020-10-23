@@ -4,7 +4,7 @@ import { Notifications } from "expo";
 import * as Yup from "yup";
 
 import { Form, FormField, SubmitButton } from "./forms";
-import messagesApi from "../api/messeges";
+import messagesApi from "../api/messages";
 
 function ContactSellerForm({ listing }) {
   const handleSubmit = async ({ message }, { resetForm }) => {
