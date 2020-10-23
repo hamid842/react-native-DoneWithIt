@@ -25,7 +25,6 @@ function LoginScreen() {
     const result = await authApi.login(email, password);
     if (!result.ok) {
       return setLoginFailed(true);
-      console.log(result);
     }
     setLoginFailed(false);
     logIn(result.data);

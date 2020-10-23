@@ -3,10 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { Image } from "react-native-expo-image-cache";
 
 import AppText from "../components/AppText";
 import ContactSellerForm from "../components/ContactSellerForm";
@@ -20,7 +20,12 @@ const ListingDetailScreen = ({ route }) => {
       behavior="position"
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 100}
     >
-      <Image style={styles.image} source={{ uri: listing.images[0].url }} />
+      <Image
+        style={styles.image}
+        uri={listing.images[0].url}
+        preview={{ uri: listing.images[0].thumbnailUrl }}
+        tint="light"
+      />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{listing.title}</AppText>
         <AppText style={styles.price}>{listing.price}</AppText>

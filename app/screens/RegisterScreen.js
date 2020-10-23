@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, ActivityIndicator } from "react-native";
+import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Screen from "../components/Screen";
 import usersApi from "../api/users";
 import authApi from "../api/auth";
@@ -47,7 +48,7 @@ function RegisterScreen() {
 
   return (
     <>
-      <ActivityIndicator animating={registerApi.loading || loginApi.loading} />
+      <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
       <Screen style={styles.container}>
         <Form
           initialValues={{ name: "", email: "", password: "" }}
